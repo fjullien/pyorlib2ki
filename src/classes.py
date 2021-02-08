@@ -2,10 +2,17 @@
 # SPDX-License-Identifier: BSD-3-Clause
 
 import math
-import numpy as np
 
 # Scale between orcad units and Kicad units
 grid_scale = 0.254
+
+def arange(start, end, step):
+    array = []
+    val = start
+    while val < end:
+        array.append(val)
+        val += step
+    return array
 
 class SymbolDisplayProp:
     def __init__(self, element, grid_scale = 0.254):
@@ -221,7 +228,7 @@ class Arc:
         f.write('      (polyline\n')
         f.write('      (pts\n')
 
-        angles = np.arange(start_angle, end_angle, step)
+        angles = arange(start_angle, end_angle, step)
 
         for angle in angles:
             x = cx + (rx * math.cos(angle))
@@ -265,7 +272,7 @@ class Ellipse:
         f.write('      (polyline\n')
         f.write('      (pts\n')
 
-        angles = np.arange(0, 2 * math.pi, step)
+        angles = arange(0, 2 * math.pi, step)
 
         for angle in angles:
             x = cx + (rx * math.cos(angle))
