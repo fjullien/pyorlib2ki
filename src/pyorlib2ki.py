@@ -11,6 +11,8 @@ import os
 from classes import *
 from datetime import date
 
+version = 'v1.0'
+
 def parse_orcad_file(file_name, verbose):
 
     tree = ET.parse(file_name)
@@ -169,6 +171,7 @@ def convert_file(input_file, output_file, verbose):
         f.write(')\n')
 
 def print_usage():
+    print('pyorlib2ki version {}'.format(version))
     print('Usage: pyorlib2ki [-v] -i inputfile [-o outputfile]')
     print('       pyorlib2ki -h')
 
