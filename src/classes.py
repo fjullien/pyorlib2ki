@@ -406,7 +406,8 @@ class Symbol:
 
         x = int(self.libpart[0].bbox['x1']) * grid_scale
         y = int(self.libpart[0].bbox['y2']) * -grid_scale
-        y = y + 4
+        # Put footprint value below so we can read it
+        y = y - 10
         f.write('    (property "Footprint" "{}" (id 2) (at {} {} 0)\n'.format(self.footprint, x, y))
         f.write('      (effects (font (size {} {})) (justify left) hide)\n'.format(height, width))
         f.write('    )\n')
@@ -417,10 +418,15 @@ class Symbol:
         f.write('      (effects (font (size 0 0)) hide)\n')
         f.write('    )\n')
 
+        x = int(self.libpart[0].bbox['x1']) * grid_scale
+        y = int(self.libpart[0].bbox['y2']) * -grid_scale
+        # Put user's properties below footprint so we can read them
+        y = y - 11 - height
         if len(self.libpart[0].userProp) > 1:
             for i, p in enumerate(self.libpart[0].userProp):
-                f.write('    (property "{}" "{}" (id {}) (at 0 0 0)\n'.format(p['name'], p['val'], i + 4))
-                f.write('      (effects (font (size 0 0)) hide)\n')
+                f.write('    (property "{}" "{}" (id {}) (at {} {} 0)\n'.format(p['name'], p['val'], i + 4, x, y))
+                f.write('      (effects (font (size {} {})) (justify left) hide)\n'.format(height, width))
                 f.write('    )\n')
+                y = y - height - 1
 
         return True
