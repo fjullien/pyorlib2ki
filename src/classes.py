@@ -397,34 +397,34 @@ class Symbol:
             x = int(self.libpart[0].bbox['x1']) * grid_scale
             y = int(self.libpart[0].bbox['y2']) * -grid_scale
 
-        name = self.libpart[0].value
-        if name == '':
-            name = self.name
-        f.write('    (property "Value" "{}" (id 1) (at {} {} 0)\n'.format(name, x, y))
+        val = self.libpart[0].value
+        if val == '':
+            val = self.name
+        f.write('    (property "PartValue" "{}" (id 4) (at {} {} 0)\n'.format(val, x, y))
         f.write('      (effects (font (size {} {})) (justify left))\n'.format(height, width))
         f.write('    )\n')
 
         x = int(self.libpart[0].bbox['x1']) * grid_scale
         y = int(self.libpart[0].bbox['y2']) * -grid_scale
-        # Put footprint value below so we can read it
         y = y - 10
+        # Put Value value below so we can read it
+        f.write('    (property "Value" "{}" (id 1) (at {} {} 0)\n'.format(self.name, x, y))
+        f.write('      (effects (font (size {} {})) (justify left) hide)\n'.format(height, width))
+        f.write('    )\n')
+
+        y = y - height -1
         f.write('    (property "Footprint" "{}" (id 2) (at {} {} 0)\n'.format(self.footprint, x, y))
         f.write('      (effects (font (size {} {})) (justify left) hide)\n'.format(height, width))
         f.write('    )\n')
 
-        x = int(self.libpart[0].bbox['x1']) * grid_scale
-        y = int(self.libpart[0].bbox['y1']) * -grid_scale
         f.write('    (property "Datasheet" "" (id 3) (at 0 0 0)\n')
         f.write('      (effects (font (size 0 0)) hide)\n')
         f.write('    )\n')
 
-        x = int(self.libpart[0].bbox['x1']) * grid_scale
-        y = int(self.libpart[0].bbox['y2']) * -grid_scale
-        # Put user's properties below footprint so we can read them
-        y = y - 11 - height
+        y = y - height -1
         if len(self.libpart[0].userProp) > 1:
             for i, p in enumerate(self.libpart[0].userProp):
-                f.write('    (property "{}" "{}" (id {}) (at {} {} 0)\n'.format(p['name'], p['val'], i + 4, x, y))
+                f.write('    (property "{}" "{}" (id {}) (at {} {} 0)\n'.format(p['name'], p['val'], i + 5, x, y))
                 f.write('      (effects (font (size {} {})) (justify left) hide)\n'.format(height, width))
                 f.write('    )\n')
                 y = y - height - 1
