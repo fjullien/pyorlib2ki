@@ -96,7 +96,7 @@ def parse_orcad_file(file_name, verbose):
 
     return packages
 
-def convert_file(input_file, output_file, verbose):
+def convert_file(input_file, output_file, verbose, text_size):
 
     lib = parse_orcad_file(input_file, verbose)
 
@@ -124,7 +124,7 @@ def convert_file(input_file, output_file, verbose):
             else:
                 unit = 1
 
-            p.print_properties(f);
+            p.print_properties(f, text_size);
 
             for libpart in p.libpart:
 
@@ -180,9 +180,10 @@ def main(argv):
     input_file_name = ''
     output_file_name = ''
     verbose = False
+    text_size = 1.27
 
     try:
-        opts, args = getopt.getopt(argv, "i:o:hv")
+        opts, args = getopt.getopt(argv, "i:o:hvt:")
     except getopt.GetoptError:
         print_usage()
         sys.exit(2)
@@ -197,6 +198,8 @@ def main(argv):
                 input_file_name = arg
             elif opt in ('-v'):
                 verbose = True
+            elif opt in ('-t'):
+                text_size = float(arg)
 
     if (input_file_name == ''):
             print_usage()
@@ -206,7 +209,7 @@ def main(argv):
             output_file_name = os.path.splitext(input_file_name)[0] + '.kicad_sym'
             print(output_file_name)
 
-    convert_file(input_file_name, output_file_name, verbose)
+    convert_file(input_file_name, output_file_name, verbose, text_size)
 
 if __name__ == "__main__":
     main(sys.argv[1:])

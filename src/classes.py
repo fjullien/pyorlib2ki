@@ -380,9 +380,9 @@ class Symbol:
         if homo == '1':
             self.homogeneous  = True
 
-    def print_properties(self, f, grid_scale = 0.254):
-        height = 2
-        width  = 2
+    def print_properties(self, f, text_size = 1.27, grid_scale = 0.254):
+        height = text_size
+        width  = text_size
 
         x = self.libpart[0].displayProp[0].locX
         y = self.libpart[0].displayProp[0].locY
