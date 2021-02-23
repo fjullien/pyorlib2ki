@@ -11,7 +11,7 @@ import os
 from classes import *
 from datetime import date
 
-version = 'v1.0'
+version = 'v1.1'
 
 def parse_orcad_file(file_name, verbose):
 
