@@ -422,11 +422,17 @@ class Symbol:
         f.write('    )\n')
 
         y = y - height -1
-        if len(self.libpart[0].userProp) > 1:
+        nb_user_prop = len(self.libpart[0].userProp)
+        if nb_user_prop > 1:
             for i, p in enumerate(self.libpart[0].userProp):
                 f.write('    (property "{}" "{}" (id {}) (at {} {} 0)\n'.format(p['name'], p['val'], i + 5, x, y))
                 f.write('      (effects (font (size {} {})) (justify left) hide)\n'.format(height, width))
                 f.write('    )\n')
                 y = y - height - 1
+
+        if (self.homogeneous == False) and (len(self.libpart) > 1):
+            f.write('    (property "ki_locked" "" (id {}) (at 0 0 0)\n'.format(nb_user_prop + 5))
+            f.write('      (effects (font (size 1.27 1.27)))\n')
+            f.write('    )\n')
 
         return True
