@@ -96,7 +96,7 @@ def parse_orcad_file(file_name, verbose):
 
     return packages
 
-def convert_file(input_file, output_file, verbose, text_size):
+def convert_file(input_file, output_file, verbose, text_size, pin_nb_sz, pin_name_sz):
 
     lib = parse_orcad_file(input_file, verbose)
 
@@ -159,7 +159,7 @@ def convert_file(input_file, output_file, verbose, text_size):
                         f.write('    (symbol "{}_{}_1"\n'.format(p.name, unit))
 
                     for pin in libpart.pins:
-                        pin.draw(f, phy)
+                        pin.draw(f, phy, pin_nb_sz, pin_name_sz)
 
                     f.write('    )\n')
 
@@ -172,8 +172,15 @@ def convert_file(input_file, output_file, verbose, text_size):
 
 def print_usage():
     print('pyorlib2ki version {}'.format(version))
-    print('Usage: pyorlib2ki [-v] -i inputfile [-o outputfile]')
-    print('       pyorlib2ki -h')
+    print('Usage: pyorlib2ki [-t sz] [-p sz] [-n sz] [-v] -i inputfile [-o outputfile]')
+    print('')
+    print('    -h   print this help')
+    print('    -i   specify input file')
+    print('    -o   specify output file')
+    print('    -t   configure text size (default 1.27mm)')
+    print('    -p   configure pin number text size (default 1.5mm)')
+    print('    -n   configure pin name text size (default 1.7mm)')
+    print('')
 
 def main(argv):
 
@@ -181,9 +188,11 @@ def main(argv):
     output_file_name = ''
     verbose = False
     text_size = 1.27
+    pin_name_sz = 1.7
+    pin_nb_sz = 1.5
 
     try:
-        opts, args = getopt.getopt(argv, "i:o:hvt:")
+        opts, args = getopt.getopt(argv, "i:o:hvt:p:n:")
     except getopt.GetoptError:
         print_usage()
         sys.exit(2)
@@ -200,6 +209,10 @@ def main(argv):
                 verbose = True
             elif opt in ('-t'):
                 text_size = float(arg)
+            elif opt in ('-p'):
+                pin_nb_sz = float(arg)
+            elif opt in ('-n'):
+                pin_name_sz = float(arg)
 
     if (input_file_name == ''):
             print_usage()
@@ -209,7 +222,7 @@ def main(argv):
             output_file_name = os.path.splitext(input_file_name)[0] + '.kicad_sym'
             print(output_file_name)
 
-    convert_file(input_file_name, output_file_name, verbose, text_size)
+    convert_file(input_file_name, output_file_name, verbose, text_size, pin_nb_sz, pin_name_sz)
 
 if __name__ == "__main__":
     main(sys.argv[1:])

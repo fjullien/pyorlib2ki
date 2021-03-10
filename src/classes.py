@@ -129,10 +129,10 @@ class SymbolPinScalar:
         if ((self.x1() - self.x2()) == 0) and ((self.y1() - self.y2()) == 0):
             return 0
 
-    def draw(self, f, phy):
+    def draw(self, f, phy, pin_nb_sz = 1.5, pin_name_sz = 1.7):
         f.write('      (pin {} {} (at {} {} {}) (length {})\n'.format(self.get_type_string(), self.shape(), self.x1(), self.y1(), self.angle(), self.len()))
-        f.write('        (name "{}" (effects (font (size 1.7 1.7))))\n'.format(self.name()))
-        f.write('        (number "{}" (effects (font (size 1.7 1.7))))\n'.format(phy.pins[self.defn['position']]))
+        f.write('        (name "{}" (effects (font (size {} {}))))\n'.format(self.name(), pin_name_sz, pin_name_sz))
+        f.write('        (number "{}" (effects (font (size {} {}))))\n'.format(phy.pins[self.defn['position']], pin_nb_sz, pin_nb_sz))
         f.write('      )\n')
 
 class Rectangle:
