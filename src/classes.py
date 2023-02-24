@@ -25,11 +25,11 @@ class SymbolDisplayProp:
         self.bold = ''
 
         if element.find('PropFont').find('Defn').attrib['italic'] == '1':
-            dp.italic = 'ITALIC'
+            self.italic = 'ITALIC'
 
         weight = int(element.find('PropFont').find('Defn').attrib['weight'])
         if weight > 400:
-            dp.bold = 'BOLD'
+            self.bold = 'BOLD'
 
 class PhyPart:
     def __init__(self, element):
