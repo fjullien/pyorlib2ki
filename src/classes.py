@@ -371,7 +371,7 @@ class LibPart:
 
 class Symbol:
     def __init__(self, name, refdes, footprint, homo):
-        self.name         = name.replace(' ', '_').replace('/', '_').replace('\t', '')
+        self.name         = name.replace(' ', '_').replace('/', '_').replace('\t', '').replace('\\', '_')
         self.footprint    = footprint
         self.refdes       = refdes
         self.libpart      = []

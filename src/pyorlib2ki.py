@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-# SPDX-FileCopyrightText: 2021 Franck Jullien <franck.jullien@gmail.com>
+# SPDX-FileCopyrightText: 2023 Franck Jullien <franck.jullien@gmail.com>
 # SPDX-License-Identifier: BSD-3-Clause
 
 import xml.etree.ElementTree as ET
@@ -11,7 +11,7 @@ import os
 from classes import *
 from datetime import date
 
-version = 'v1.1'
+version = 'v1.2'
 
 def parse_orcad_file(file_name, verbose):
 
